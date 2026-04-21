@@ -163,7 +163,8 @@ async function handleFormSubmit(event) {
         const response = await fetch('/upload/', {
             method: 'POST',
             body: formData,
-            headers: { 'X-CSRFToken': getCookie('csrftoken') }
+            headers: { 'X-CSRFToken': getCookie('csrftoken') },
+            credentials: 'same-origin'
         });
 
         const result = await response.json();
