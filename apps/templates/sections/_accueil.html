@@ -1,0 +1,52 @@
+{% load static %}
+<section class="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden bg-cover bg-center bg-no-repeat" style="background-image: url('{% static 'images/background-accueil.png' %}');">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+            
+            <div class="w-full md:w-1/2 space-y-8 text-center md:text-left">
+    
+                <div class="border-l border-white/20 pl-6 md:pl-8 space-y-6">
+                    <h4 class="text-white/80 font-bold uppercase tracking-widest text-sm">
+                        Innovation & Performance
+                    </h4>
+                    
+                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight tracking-tight">
+                        Optimisez l’extraction rapide de vos <span class="text-white">données</span>
+                    </h1>
+                    
+                    <p class="text-lg text-white/80 leading-relaxed max-w-2xl">
+                        Découvrez une interface intuitive pour analyser vos données complexes. 
+                        Importez vos fichiers Excel et CSV en un clic et visualisez vos résultats 
+                        en temps réel avec une précision professionnelle.
+                    </p>
+                </div>
+                
+                <div class="pt-2">
+                    <a href="{% url 'page_tableau' %}" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       class="inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-600/20 transition-all transform hover:-translate-y-1 active:scale-95">
+                        Commencer l'analyse
+                        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </a>
+                </div>
+            
+            </div>
+
+            <div class="w-full md:w-1/2 group">
+                <div class="relative">
+                    <div class="absolute -inset-1"></div>
+                    
+                    <div class="relative rounded-2xl overflow-hidden">
+                        <img src="{% static 'images/photos-accueil.png' %}" 
+                             alt="Analyse de données" 
+                             class="w-full h-auto object-cover transform">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

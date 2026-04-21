@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecteur de Données</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-black-50 min-h-screen">
+    
+    {% include "header/_navbar.html" %}
+
+    <main class="">
+        {% include "sections/_accueil.html" %}
+        {% include "sections/_fonctionnalitie.html" %}
+        {% include "sections/_services.html" %}
+    </main>
+
+    {% include "footer/_footer.html" %}
+
+    <script src="{% static 'js/navbar.js' %}"></script>
+</body>
+</html>

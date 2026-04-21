@@ -1,0 +1,17 @@
+# Manipulation de données
+pandas==3.0.2
+
+# Gestion des variables d'environnement (.env)
+python-dotenv==1.2.2
+
+# Intelligence Artificielle et LLM
+langchain==1.2.15
+langchain-groq==1.1.2
+langchain-core==1.2.29
+
+# Framework API Web
+Django==6.0.4
+djangorestframework==3.17.1
+
+gunicorn==25.3.0
+whitenoise==6.12.0
