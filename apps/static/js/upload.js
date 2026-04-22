@@ -149,36 +149,67 @@ async function handleFormSubmit(event) {
     
     const fileInput = document.getElementById('fileInput');
     const scanBtn = document.getElementById('scanBtn');
-    if (!fileInput.files[0]) return;
+    
+    // Vérification de sécurité
+    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+        console.warn("Aucun fichier sélectionné.");
+        return;
+    }
 
-    // Feedback bouton
+    // Sauvegarde de l'état original du bouton
     const originalBtn = scanBtn.innerHTML;
     scanBtn.disabled = true;
-    scanBtn.innerHTML = `<svg class="animate-spin h-4 w-4 mr-2" viewBox="0 0 24 24">...</svg> Analyse...`;
+    scanBtn.innerHTML = `
+        <svg class="animate-spin h-4 w-4 mr-2 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg> Analyse en cours...`;
 
     const formData = new FormData();
+    
     formData.append('file', fileInput.files[0]);
 
     try {
         const response = await fetch('/upload/', {
             method: 'POST',
             body: formData,
-            headers: { 'X-CSRFToken': getCookie('csrftoken') },
-            credentials: 'same-origin'
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Accept': 'application/json'
+            },
         });
 
         const result = await response.json();
+
         if (response.ok) {
-            localStorage.setItem('lastAnalysisData', JSON.stringify(result.data));
-            renderTable(result.data);
+            console.log("Analyse réussie:", result);
+            
+            // On stocke les données retournées par le serveur
+            if (result.data) {
+                localStorage.setItem('lastAnalysisData', JSON.stringify(result.data));
+                renderTable(result.data);
+            } else {
+                console.error("Format de réponse inattendu : pas de champ 'data'");
+            }
         } else {
-            alert("Erreur: " + result.message);
+            // Affichage détaillé de l'erreur 400 dans la console
+            console.error("Erreur Backend (400/500):", result);
+            
+            // Si Django renvoie des erreurs de validation (ex: result.file)
+            let errorMessage = result.message || result.detail || "La validation du fichier a échoué.";
+            if (result.file) errorMessage = "Erreur fichier: " + result.file[0];
+            
+            alert("Erreur: " + errorMessage);
         }
     } catch (error) {
-        alert("Erreur réseau");
+        console.error("Erreur réseau ou parsing:", error);
+        alert("Impossible de contacter le serveur. Vérifiez votre connexion.");
+
     } finally {
+
         scanBtn.disabled = false;
         scanBtn.innerHTML = originalBtn;
+        
         fileInput.value = '';
     }
 }
